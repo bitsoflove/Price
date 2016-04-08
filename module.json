@@ -1,0 +1,17 @@
+{
+    "name": "Price",
+    "alias": "price",
+    "description": "",
+    "version": "v0.1",
+    "keywords": [],
+    "active": 1,
+    "order": 14,
+    "providers": [
+        "Modules\\Price\\Providers\\PriceServiceProvider",
+        "Modules\\Price\\Providers\\RouteServiceProvider"
+    ],
+    "aliases":{},
+    "files": [
+        
+    ]
+}
