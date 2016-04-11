@@ -125,19 +125,6 @@ class PriceServiceProvider extends ServiceProvider
         );
 
 
-        $this->app->bind(
-            'Modules\Price\Repositories\CountryRepository',
-            function () {
-                $repository = new \Modules\Price\Repositories\Eloquent\EloquentCountryRepository(new \Modules\Price\Entities\Country());
-
-                if (!config('app.cache')) {
-                    return $repository;
-                }
-
-                return new \Modules\Price\Repositories\Cache\CacheCountryDecorator($repository);
-            }
-        );
-
 
         $this->app->bind(
             'Modules\Price\Repositories\PriceTypeVatRepository',
@@ -152,8 +139,14 @@ class PriceServiceProvider extends ServiceProvider
             }
         );
 
+// add bindings
 
-        // add bindings
+
+
+
+
+
+
     }
 
     private function registerMonkeyChain()

@@ -78,14 +78,6 @@ class SidebarExtender implements \Maatwebsite\Sidebar\SidebarExtender
                     $this->auth->hasAccess('price.vats.index')
                 );
             });
-            $group->item(trans('price::countries.title.countries'), function (Item $item) {
-                $item->weight(2);
-                $item->icon('fa fa-camera');
-                $item->route('admin.price.country.index');
-                $item->authorize(
-                    $this->auth->hasAccess('price.countries.index')
-                );
-            });
             $group->item(trans('price::pricetypevats.title.pricetypevats'), function (Item $item) {
                 $item->weight(2);
                 $item->icon('fa fa-camera');

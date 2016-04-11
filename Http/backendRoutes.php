@@ -69,18 +69,7 @@ $router->group(['prefix' =>'/price'], function (Router $router) {
     get('vats/{vats}/edit', ['as' => 'admin.price.vat.edit', 'uses' => 'VatController@edit']);
     put('vats/{vats}/edit', ['as' => 'admin.price.vat.update', 'uses' => 'VatController@update']);
     delete('vats/{vats}', ['as' => 'admin.price.vat.destroy', 'uses' => 'VatController@destroy']);
-
-
-    $router->bind('countries', function ($id) {
-        return app('Modules\Price\Repositories\CountryRepository')->find($id);
-    });
-    get('countries', ['as' => 'admin.price.country.index', 'uses' => 'CountryController@index']);
-    get('countries/create', ['as' => 'admin.price.country.create', 'uses' => 'CountryController@create']);
-    post('countries', ['as' => 'admin.price.country.store', 'uses' => 'CountryController@store']);
-    get('countries/{countries}/edit', ['as' => 'admin.price.country.edit', 'uses' => 'CountryController@edit']);
-    put('countries/{countries}/edit', ['as' => 'admin.price.country.update', 'uses' => 'CountryController@update']);
-    delete('countries/{countries}', ['as' => 'admin.price.country.destroy', 'uses' => 'CountryController@destroy']);
-
+    
 
     $router->bind('pricetypevats', function ($id) {
         return app('Modules\Price\Repositories\PriceTypeVatRepository')->find($id);
