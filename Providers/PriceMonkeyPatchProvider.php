@@ -32,5 +32,13 @@ class PriceMonkeyPatchProvider extends ServiceProvider
                 'price_id'
             );
         });
+
+        $productVersion->addExternalMethod('getDefaultPriceAttribute', function () {
+            // @todo: refactor this to work with slug instead of id
+            return $this->prices()
+                ->where('price_type_id', "=", config('asgard.price.config.price_types.default', 1))
+                ->first();
+        });
+
     }
 }

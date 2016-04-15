@@ -1,5 +1,8 @@
 <?php
 
 return [
-    'name' => 'Price'
+    'name' => 'Price',
+    'price_types' => [
+        'default' => 1, // just for testing atm
+    ]
 ];
