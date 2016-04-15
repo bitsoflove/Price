@@ -1,5 +1,6 @@
 <?php namespace Modules\Price\Providers;
 
+use Modules\Price\Providers\PriceMonkeyPatchProvider;
 use Illuminate\Support\ServiceProvider;
 
 class PriceServiceProvider extends ServiceProvider
@@ -18,8 +19,9 @@ class PriceServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->register(PriceMonkeyPatchProvider::class);
+
         $this->registerBindings();
-        $this->registerMonkeyChain();
     }
 
     /**
@@ -141,36 +143,6 @@ class PriceServiceProvider extends ServiceProvider
 
 // add bindings
 
-
-
-
-
-
-
     }
 
-    private function registerMonkeyChain()
-    {
-        $product = $this->app->make('bol.product');
-        $productVersion = $this->app->make('bol.product.version');
-
-        $productVersion->addExternalMethod('productVersionPrices', function () {
-            return $this->hasMany(
-                \Modules\Price\Entities\ProductVersionPrice::class,
-                'product_version_id',
-                'id'
-            );
-        });
-
-        $productVersion->addExternalMethod('prices', function () {
-            return $this->belongsToMany(
-                \Modules\Price\Entities\Price::class,
-                'product_version_prices',
-                'product_version_id',
-                'price_id'
-            );
-
-        });
-
-    }
 }
