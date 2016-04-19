@@ -22,8 +22,12 @@ class ProductVersionPrice extends Model
 
     public function productVersion()
     {
-        // @todo: link to product table
-//        return $this->belongsTo(\Modules\Price\Entities\ProductVersion::class, 'product_version_id', 'id');
+        return $this->belongsTo(
+            config('asgard.product.config.entities.product-version.class',
+                "\\Modules\\Product\\Entities\\ProductVersion"),
+            'product_version_id',
+            'id'
+        );
     }
 
 
