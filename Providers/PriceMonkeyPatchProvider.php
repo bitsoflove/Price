@@ -1,10 +1,13 @@
 <?php namespace Modules\Price\Providers;
 
-use Illuminate\Support\ServiceProvider;
+use Modules\Countries\Entities\Country;
 use Modules\Price\Entities\Price;
+use Modules\Price\Entities\PriceTypeVat;
+use Modules\Price\Entities\ProductVersionDiscount;
 use Modules\Price\Entities\ProductVersionPrice;
+use Modules\Product\Providers\BaseMonkeyPatchProvider;
 
-class PriceMonkeyPatchProvider extends ServiceProvider
+class PriceMonkeyPatchProvider extends BaseMonkeyPatchProvider
 {
 
     /**
@@ -14,9 +17,7 @@ class PriceMonkeyPatchProvider extends ServiceProvider
      */
     public function register()
     {
-        $productVersion = $this->app->make('bol.product.version');
-
-        $productVersion->addExternalMethod('productVersionPrices', function () {
+        $this->productVersion->addExternalMethod('productVersionPrices', function () {
             return $this->hasMany(
                 ProductVersionPrice::class,
                 'product_version_id',
@@ -24,7 +25,15 @@ class PriceMonkeyPatchProvider extends ServiceProvider
             );
         });
 
-        $productVersion->addExternalMethod('prices', function () {
+        $this->productVersion->addExternalMethod('productVersionDiscounts', function () {
+            return $this->hasMany(
+                ProductVersionDiscount::class,
+                'product_version_id',
+                'id'
+            );
+        });
+
+        $this->productVersion->addExternalMethod('prices', function () {
             return $this->belongsToMany(
                 Price::class,
                 'product_version_prices',
@@ -33,12 +42,34 @@ class PriceMonkeyPatchProvider extends ServiceProvider
             );
         });
 
-        $productVersion->addExternalMethod('getDefaultPriceAttribute', function () {
-            // @todo: refactor this to work with slug instead of id
-            return $this->prices()
-                ->where('price_type_id', "=", config('asgard.price.config.price_types.default', 1))
-                ->first();
+        $this->productVersion->addExternalMethod('getPriceForType', function ($type) {
+            return $this->prices()->whereHas('priceType', function($q)use($type){
+                $q->where('slug', '=',$type);
+            })->first();
         });
 
+        /**
+         * If we only have one price we can use a default price
+         */
+        $this->productVersion->addExternalMethod('getDefaultPriceAttribute', function () {
+            return $this->getPriceForType(config('asgard.price.config.price_types.default', 'normal'));
+        });
+
+        /**
+         * Quickly get the first discount value
+         */
+        $this->productVersion->addExternalMethod('getDiscountAttribute', function () {
+            return $this->productVersionDiscounts->first();
+        });
+
+        $country = app(Country::class);
+
+        $country->addExternalMethod('priceTypeVats', function () {
+            return $this->hasMany(
+                PriceTypeVat::class,
+                'country_id',
+                'id'
+            );
+        });
     }
 }
