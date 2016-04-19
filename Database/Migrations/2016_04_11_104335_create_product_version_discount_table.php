@@ -14,7 +14,7 @@ class CreateProductVersionDiscountTable extends Migration {
 	{
 		Schema::create('product_version_discount', function(Blueprint $table)
 		{
-			$table->integer('id')->unsigned()->primary();
+			$table->increments('id');
 			$table->integer('product_version_id')->unsigned()->unique('product_version_id_UNIQUE');
 			$table->enum('discount_type', array('percentage','number'))->default('number');
 			$table->float('amount', 10, 0);
