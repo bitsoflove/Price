@@ -1,13 +1,18 @@
 <?php namespace Modules\Price\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Laracasts\Presenter\PresentableTrait;
 use Modules\Price\Entities\Currency;
 use Modules\Price\Entities\PriceType;
 use Modules\Price\Entities\ProductVersionPrice;
 use Modules\Price\Entities\Unit;
+use Modules\Price\Presenters\PricePresenter;
 
 class Price extends Model
 {
+
+    use PresentableTrait;
+
     /**
      * @var string
      */
@@ -23,6 +28,8 @@ class Price extends Model
         'currency_id',
         'unit_id'
     ];
+
+    protected $presenter = PricePresenter::class;
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -111,7 +118,7 @@ class Price extends Model
 
     /**
      * Sync many-to-many relationships
-     * 
+     *
      * @param Model $model
      * @param array $attributes
      */
