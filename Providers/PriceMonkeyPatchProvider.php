@@ -1,10 +1,12 @@
 <?php namespace Modules\Price\Providers;
 
 use Modules\Countries\Entities\Country;
+use Modules\Customer\Entities\CustomerType;
 use Modules\Price\Entities\Price;
 use Modules\Price\Entities\PriceTypeVat;
 use Modules\Price\Entities\ProductVersionDiscount;
 use Modules\Price\Entities\ProductVersionPrice;
+use Modules\Price\Entities\Vat;
 use Modules\Product\Providers\BaseMonkeyPatchProvider;
 
 class PriceMonkeyPatchProvider extends BaseMonkeyPatchProvider
@@ -71,5 +73,17 @@ class PriceMonkeyPatchProvider extends BaseMonkeyPatchProvider
                 'id'
             );
         });
+
+        $customer_type = app(CustomerType::class);
+
+        $customer_type->addExternalMethod('vats', function () {
+            return $this->belongsToMany(
+                Vat::class,
+                'customer_type_vat',
+                'customer_type_id'
+            );
+        });
+
+
     }
 }
