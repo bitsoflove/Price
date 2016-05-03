@@ -1,27 +1,37 @@
 <?php namespace Modules\Price\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Modules\Price\Entities\Price;
 
 class Currency extends Model
 {
 
     /**
-     * Generated
+     * @var string
      */
-
     protected $table = 'currencies';
-    protected $fillable = ['id', 'name', 'iso_4217'];
 
-    
+    /**
+     * @var array
+     */
+    protected $fillable = [
+        'id',
+        'name',
+        'iso_4217'
+    ];
 
-
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function prices()
     {
-        return $this->hasMany(\Modules\Price\Entities\Price::class, 'currency_id', 'id');
+        return $this->hasMany(Price::class, 'currency_id', 'id');
     }
 
-
-
+    /**
+     * @param array $attributes
+     * @return bool|int
+     */
     public function update(array $attributes = [])
     {
         $res = parent::update($attributes);
@@ -29,6 +39,10 @@ class Currency extends Model
         return $res;
     }
 
+    /**
+     * @param array $attributes
+     * @return static
+     */
     public static function create(array $attributes = [])
     {
         $res = parent::create($attributes);
@@ -38,6 +52,8 @@ class Currency extends Model
 
     /**
      * Sync many-to-many relationships
+     * @param Model $model
+     * @param array $attributes
      */
     private static function sync($model, array $attributes = [])
     {

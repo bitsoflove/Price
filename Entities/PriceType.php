@@ -1,32 +1,44 @@
 <?php namespace Modules\Price\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Modules\Price\Entities\Price;
+use Modules\Price\Entities\PriceTypeVat;
 
 class PriceType extends Model
 {
+    /**
+     * @var string
+     */
+    protected $table = 'price_types';
+    
+    /**
+     * @var array
+     */
+    protected $fillable = [
+        'id',
+        'slug'
+    ];
 
     /**
-     * Generated
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-
-    protected $table = 'price_types';
-    protected $fillable = ['id', 'slug'];
-
-    
-
-
     public function priceTypeVats()
     {
-        return $this->hasMany(\Modules\Price\Entities\PriceTypeVat::class, 'price_type_id', 'id');
+        return $this->hasMany(PriceTypeVat::class, 'price_type_id', 'id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function prices()
     {
-        return $this->hasMany(\Modules\Price\Entities\Price::class, 'price_type_id', 'id');
+        return $this->hasMany(Price::class, 'price_type_id', 'id');
     }
 
-
-
+    /**
+     * @param array $attributes
+     * @return bool|int
+     */
     public function update(array $attributes = [])
     {
         $res = parent::update($attributes);
@@ -34,6 +46,10 @@ class PriceType extends Model
         return $res;
     }
 
+    /**
+     * @param array $attributes
+     * @return static
+     */
     public static function create(array $attributes = [])
     {
         $res = parent::create($attributes);
@@ -43,6 +59,8 @@ class PriceType extends Model
 
     /**
      * Sync many-to-many relationships
+     * @param Model $model
+     * @param array $attributes
      */
     private static function sync($model, array $attributes = [])
     {

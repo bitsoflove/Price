@@ -1,27 +1,34 @@
 <?php namespace Modules\Price\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Modules\Price\Entities\Price;
 
 class Unit extends Model
 {
+    /**
+     * @var string
+     */
+    protected $table = 'units';
 
     /**
-     * Generated
+     * @var array
      */
-
-    protected $table = 'units';
     protected $fillable = ['id', 'quantity', 'unit'];
 
-    
 
-
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function prices()
     {
-        return $this->hasMany(\Modules\Price\Entities\Price::class, 'unit_id', 'id');
+        return $this->hasMany(Price::class, 'unit_id', 'id');
     }
 
 
-
+    /**
+     * @param array $attributes
+     * @return bool|int
+     */
     public function update(array $attributes = [])
     {
         $res = parent::update($attributes);
@@ -29,6 +36,10 @@ class Unit extends Model
         return $res;
     }
 
+    /**
+     * @param array $attributes
+     * @return static
+     */
     public static function create(array $attributes = [])
     {
         $res = parent::create($attributes);
@@ -38,6 +49,8 @@ class Unit extends Model
 
     /**
      * Sync many-to-many relationships
+     * @param Model $model
+     * @param array $attributes
      */
     private static function sync($model, array $attributes = [])
     {

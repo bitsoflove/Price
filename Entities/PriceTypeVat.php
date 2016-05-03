@@ -8,9 +8,6 @@ use Modules\Price\Entities\Vat;
 
 class PriceTypeVat extends Model
 {
-
-    use EloquentTentacle;
-
     /**
      * @var string
      */
