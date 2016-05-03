@@ -31,7 +31,8 @@ class Vat extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function customerTypes(){
+    public function customerTypes()
+    {
         return $this->belongsToMany(
             CustomerType::class,
             'customer_type_vat',
@@ -68,5 +69,8 @@ class Vat extends Model
      */
     private static function sync($model, array $attributes = [])
     {
+        if (isset($attributes['customer_types'])) {
+            $model->customerTypes()->sync($attributes['customer_types']);
+        }
     }
 }

@@ -3,8 +3,8 @@
 use Laracasts\Flash\Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Modules\Customer\Repositories\CustomerTypeRepository;
 use Modules\Price\Entities\Vat;
-use Modules\Price\Repositories\PriceTypeVatRepository;
 use Modules\Price\Repositories\VatRepository;
 use Modules\Core\Http\Controllers\Admin\AdminBaseController;
 
@@ -16,18 +16,18 @@ class VatController extends AdminBaseController
     protected $vat;
 
     /**
-     * @var PriceTypeVatRepository
+     * @var CustomerTypeRepository
      */
-    protected $priceTypeVat;
+    protected $customerType;
 
     public function __construct(
         VatRepository $vat,
-        PriceTypeVatRepository $priceTypeVat
+        CustomerTypeRepository $customerType
     ) {
         parent::__construct();
 
         $this->vat = $vat;
-        $this->priceTypeVat = $priceTypeVat;
+        $this->customerType = $customerType;
     }
 
     /**
@@ -45,13 +45,14 @@ class VatController extends AdminBaseController
     /**
      * Show the form for creating a new resource.
      *
+     * @param Vat $vat
      * @return Response
      */
     public function create(Vat $vat)
     {
         $variables = [
             'vat' => $vat,
-            'priceTypeVats' => $this->priceTypeVat->all(),
+            'customerTypes' => $this->customerType->all(),
         ];
 
         return view('price::admin.vats.create', $variables);
@@ -82,7 +83,7 @@ class VatController extends AdminBaseController
     {
         $variables = [
             'vat' => $vat,
-            'priceTypeVats' => $this->priceTypeVat->all(),
+            'customerTypes' => $this->customerType->all(),
         ];
 
         return view('price::admin.vats.edit', $variables);
