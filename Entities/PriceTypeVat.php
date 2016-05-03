@@ -1,37 +1,70 @@
 <?php namespace Modules\Price\Entities;
 
+use Greabock\Tentacles\EloquentTentacle;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Price\Entities\Country;
+use Modules\Price\Entities\PriceType;
+use Modules\Price\Entities\Vat;
 
 class PriceTypeVat extends Model
 {
 
+    use EloquentTentacle;
+
     /**
-     * Generated
+     * @var string
      */
-
     protected $table = 'price_type_vat';
-    protected $fillable = ['price_type_id', 'vat_id', 'country_id'];
 
-    
+    /**
+     * @var array
+     */
+    protected $fillable = [
+        'price_type_id',
+        'vat_id',
+        'country_id'
+    ];
 
-
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function country()
     {
-        return $this->belongsTo(\Modules\Price\Entities\Country::class, 'country_id', 'id');
+        return $this->belongsTo(
+            Country::class,
+            'country_id',
+            'id'
+        );
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function priceType()
     {
-        return $this->belongsTo(\Modules\Price\Entities\PriceType::class, 'price_type_id', 'id');
+        return $this->belongsTo(
+            PriceType::class,
+            'price_type_id',
+            'id'
+        );
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function vat()
     {
-        return $this->belongsTo(\Modules\Price\Entities\Vat::class, 'vat_id', 'id');
+        return $this->belongsTo(
+            Vat::class,
+            'vat_id',
+            'id'
+        );
     }
 
-
-
+    /**
+     * @param array $attributes
+     * @return bool|int
+     */
     public function update(array $attributes = [])
     {
         $res = parent::update($attributes);
@@ -39,6 +72,10 @@ class PriceTypeVat extends Model
         return $res;
     }
 
+    /**
+     * @param array $attributes
+     * @return static
+     */
     public static function create(array $attributes = [])
     {
         $res = parent::create($attributes);
@@ -48,6 +85,8 @@ class PriceTypeVat extends Model
 
     /**
      * Sync many-to-many relationships
+     * @param Model $model
+     * @param array $attributes
      */
     private static function sync($model, array $attributes = [])
     {
