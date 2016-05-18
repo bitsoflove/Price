@@ -16,26 +16,5 @@
                           'is_translation' => 0
                         ])
 
-    <?php $checked = $vat->customerTypes->lists('id'); ?>
-
-    @foreach($customerTypes as $customerType)
-
-        <div class="checkbox">
-            <label>
-                <input
-                        type="checkbox"
-                        name="customer_types[]"
-                        value="{{ $customerType->id }}"
-                        @if($checked->search($customerType->id) !== false)
-                        checked="checked"
-                        @endif
-                > {{ $customerType->slug }}
-
-            </label>
-        </div>
-
-
-        @endforeach
-
         </p>
 </div>

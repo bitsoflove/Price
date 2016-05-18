@@ -1,7 +1,6 @@
 <?php namespace Modules\Price\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use Modules\Customer\Entities\CustomerType;
 use Modules\Price\Entities\PriceTypeVat;
 
 class Vat extends Model
@@ -27,19 +26,7 @@ class Vat extends Model
             'id'
         );
     }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function customerTypes()
-    {
-        return $this->belongsToMany(
-            CustomerType::class,
-            'customer_type_vat',
-            'vat_id'
-        );
-    }
-
+    
     /**
      * @param array $attributes
      * @return bool|int
@@ -69,8 +56,5 @@ class Vat extends Model
      */
     private static function sync($model, array $attributes = [])
     {
-        if (isset($attributes['customer_types'])) {
-            $model->customerTypes()->sync($attributes['customer_types']);
-        }
     }
 }
