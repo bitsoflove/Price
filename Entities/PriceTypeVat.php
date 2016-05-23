@@ -2,7 +2,7 @@
 
 use Greabock\Tentacles\EloquentTentacle;
 use Illuminate\Database\Eloquent\Model;
-use Modules\Price\Entities\Country;
+use Modules\Countries\Entities\Country;
 use Modules\Price\Entities\PriceType;
 use Modules\Price\Entities\Vat;
 
