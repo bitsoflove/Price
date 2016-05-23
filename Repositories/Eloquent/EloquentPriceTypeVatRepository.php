@@ -2,6 +2,7 @@
 
 namespace Modules\Price\Repositories\Eloquent;
 
+use Illuminate\Support\Collection;
 use Modules\Price\Repositories\PriceTypeVatRepository;
 use Modules\Core\Repositories\Eloquent\EloquentBaseRepository;
 
@@ -17,5 +18,19 @@ class EloquentPriceTypeVatRepository extends EloquentBaseRepository implements P
         }
 
         return $this->model->get();
+    }
+
+    /**
+     * Get a fully loaded collection of price type vat entities
+     *
+     * @return Collection
+     */
+    public function allFullyLoaded()
+    {
+        return $this->model->with([
+            'country',
+            'vat',
+            'priceType'
+        ])->get();
     }
 }
