@@ -54,14 +54,14 @@ class SidebarExtender implements \Maatwebsite\Sidebar\SidebarExtender
                     $this->auth->hasAccess('price.units.index')
                 );
             });
-            $group->item(trans('price::prices.title.prices'), function (Item $item) {
-                $item->weight(2);
-                $item->icon('fa fa-camera');
-                $item->route('admin.price.price.index');
-                $item->authorize(
-                    $this->auth->hasAccess('price.prices.index')
-                );
-            });
+//            $group->item(trans('price::prices.title.prices'), function (Item $item) {
+//                $item->weight(2);
+//                $item->icon('fa fa-camera');
+//                $item->route('admin.price.price.index');
+//                $item->authorize(
+//                    $this->auth->hasAccess('price.prices.index')
+//                );
+//            });
 //            $group->item(trans('price::productversionprices.title.productversionprices'), function (Item $item) {
 //                $item->weight(2);
 //                $item->icon('fa fa-camera');

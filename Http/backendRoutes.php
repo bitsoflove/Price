@@ -41,11 +41,11 @@ $router->group(['prefix' =>'/price'], function (Router $router) {
     $router->bind('prices', function ($id) {
         return app('Modules\Price\Repositories\PriceRepository')->find($id);
     });
-    get('prices', ['as' => 'admin.price.price.index', 'uses' => 'PriceController@index']);
-    get('prices/create', ['as' => 'admin.price.price.create', 'uses' => 'PriceController@create']);
+//    get('prices', ['as' => 'admin.price.price.index', 'uses' => 'PriceController@index']);
+//    get('prices/create', ['as' => 'admin.price.price.create', 'uses' => 'PriceController@create']);
     post('prices', ['as' => 'admin.price.price.store', 'uses' => 'PriceController@store']);
-    get('prices/{prices}/edit', ['as' => 'admin.price.price.edit', 'uses' => 'PriceController@edit']);
-    put('prices/{prices}/edit', ['as' => 'admin.price.price.update', 'uses' => 'PriceController@update']);
+//    get('prices/{prices}/edit', ['as' => 'admin.price.price.edit', 'uses' => 'PriceController@edit']);
+//    put('prices/{prices}/edit', ['as' => 'admin.price.price.update', 'uses' => 'PriceController@update']);
     delete('prices/{prices}', ['as' => 'admin.price.price.destroy', 'uses' => 'PriceController@destroy']);
 
 
