@@ -40,7 +40,7 @@ class PriceTypeVatController extends AdminBaseController
      */
     public function index()
     {
-        $data = $this->priceTypeVat->all();
+        $data = $this->priceTypeVat->allFullyLoaded();
 
         return view('price::admin.price_type_vats.index', compact('data'));
     }
