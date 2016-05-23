@@ -4,7 +4,7 @@ use Laracasts\Flash\Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Modules\Price\Entities\PriceTypeVat;
-use Modules\Price\Repositories\CountryRepository;
+use Modules\Countries\Repositories\CountryRepository;
 use Modules\Price\Repositories\PriceTypeRepository;
 use Modules\Price\Repositories\PriceTypeVatRepository;
 use Modules\Core\Http\Controllers\Admin\AdminBaseController;
