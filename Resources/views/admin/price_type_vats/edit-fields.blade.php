@@ -3,7 +3,7 @@
         @include('asgardgenerators::partials.fields.select', [
                                   'title' => 'Country',
                                   'name' => 'country_id', //country,//'countries',
-                                  'options' => $countries->lists('name','id')->toArray(),
+                                  'options' => $countries->lists('title','id')->toArray(),
                                   'primary_key' => ["id"],
                                   'selected' => $priceTypeVat->country()->lists("id","id")->toArray(),
                                 ])
@@ -19,7 +19,7 @@
 @include('asgardgenerators::partials.fields.select', [
                                   'title' => 'Vat',
                                   'name' => 'vat_id', //vat,//'vat',
-                                  'options' => $vats->lists('id','id')->toArray(),
+                                  'options' => $vats->lists('slug','id')->toArray(),
                                   'primary_key' => ["id"],
                                   'selected' => $priceTypeVat->vat()->lists("id","id")->toArray(),
                                 ])
