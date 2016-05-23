@@ -16,21 +16,35 @@ class PriceTypeVatController extends AdminBaseController
      * @var PriceTypeVatRepository
      */
     protected $priceTypeVat;
+
+    /**
+     * @var CountryRepository
+     */
     protected $country;
+
+    /**
+     * @var PriceTypeRepository
+     */
     protected $priceType;
+
+    /**
+     * @var VatRepository
+     */
     protected $vat;
 
 
     public function __construct(
         PriceTypeVatRepository $priceTypeVat,
         PriceTypeRepository $priceType,
-        VatRepository $vat
+        VatRepository $vat,
+        CountryRepository $country
     ) {
         parent::__construct();
 
         $this->priceTypeVat = $priceTypeVat;
         $this->priceType = $priceType;
         $this->vat = $vat;
+        $this->country = $country;
     }
 
     /**
@@ -56,6 +70,7 @@ class PriceTypeVatController extends AdminBaseController
             'priceTypeVat' => $priceTypeVat,
             'priceTypes' => $this->priceType->all(),
             'vats' => $this->vat->all(),
+            'countries' => $this->country->all(),
         ];
 
         return view('price::admin.price_type_vats.create', $variables);
@@ -89,6 +104,7 @@ class PriceTypeVatController extends AdminBaseController
             'priceTypeVat' => $priceTypeVat,
             'priceTypes' => $this->priceType->all(),
             'vats' => $this->vat->all(),
+            'countries' => $this->country->all(),
         ];
 
         return view('price::admin.price_type_vats.edit', $variables);
