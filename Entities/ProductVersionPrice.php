@@ -1,11 +1,11 @@
-<?php namespace Modules\Price\Entities;
+<?php
+
+namespace Modules\Price\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use Modules\Price\Entities\Price;
 
 class ProductVersionPrice extends Model
 {
-
     /**
      * @var string
      */
@@ -16,7 +16,7 @@ class ProductVersionPrice extends Model
      */
     protected $fillable = [
         'product_version_id',
-        'price_id'
+        'price_id',
     ];
 
     /**
@@ -39,7 +39,7 @@ class ProductVersionPrice extends Model
     {
         return $this->belongsTo(
             config('asgard.product.config.entities.product-version.class',
-                "\\Modules\\Product\\Entities\\ProductVersion"),
+                '\\Modules\\Product\\Entities\\ProductVersion'),
             'product_version_id',
             'id'
         );
@@ -47,28 +47,32 @@ class ProductVersionPrice extends Model
 
     /**
      * @param array $attributes
+     *
      * @return bool|int
      */
     public function update(array $attributes = [])
     {
         $res = parent::update($attributes);
         self::sync($this, $attributes);
+
         return $res;
     }
 
     /**
      * @param array $attributes
+     *
      * @return static
      */
     public static function create(array $attributes = [])
     {
         $res = parent::create($attributes);
         self::sync($res, $attributes);
+
         return $res;
     }
 
     /**
-     * Sync many-to-many relationships
+     * Sync many-to-many relationships.
      * 
      * @param Model $model
      * @param array $attributes

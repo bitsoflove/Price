@@ -2,6 +2,7 @@
 
 namespace Modules\Price\Repositories\Eloquent;
 
+use Modules\Price\Entities\Currency;
 use Modules\Price\Repositories\CurrencyRepository;
 use Modules\Core\Repositories\Eloquent\EloquentBaseRepository;
 
@@ -17,5 +18,13 @@ class EloquentCurrencyRepository extends EloquentBaseRepository implements Curre
         }
 
         return $this->model->get();
+    }
+
+    /**
+     * @param string $iso
+     * @return Currency|null
+     */
+    public function findByIso($iso){
+        return $this->model->where('iso_4217', '=', $iso)->first();
     }
 }

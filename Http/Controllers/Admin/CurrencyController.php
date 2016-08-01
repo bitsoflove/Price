@@ -1,4 +1,6 @@
-<?php namespace Modules\Price\Http\Controllers\Admin;
+<?php
+
+namespace Modules\Price\Http\Controllers\Admin;
 
 use Laracasts\Flash\Flash;
 use Illuminate\Http\Request;
@@ -60,7 +62,8 @@ class CurrencyController extends AdminBaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request $request
+     * @param Request $request
+     *
      * @return Response
      */
     public function store(Request $request)
@@ -76,7 +79,8 @@ class CurrencyController extends AdminBaseController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Currency $currency
+     * @param Currency $currency
+     *
      * @return Response
      */
     public function edit(Currency $currency)
@@ -92,8 +96,9 @@ class CurrencyController extends AdminBaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param  Currency $currency
-     * @param  Request $request
+     * @param Currency $currency
+     * @param Request  $request
+     *
      * @return Response
      */
     public function update(Currency $currency, Request $request)
@@ -109,7 +114,8 @@ class CurrencyController extends AdminBaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Currency $currency
+     * @param Currency $currency
+     *
      * @return Response
      */
     public function destroy(Currency $currency)

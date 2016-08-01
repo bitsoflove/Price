@@ -1,4 +1,6 @@
-<?php namespace Modules\Price\Http\Controllers\Admin;
+<?php
+
+namespace Modules\Price\Http\Controllers\Admin;
 
 use Laracasts\Flash\Flash;
 use Illuminate\Http\Request;
@@ -43,7 +45,6 @@ class PriceController extends AdminBaseController
      * @var ProductVersionRepository
      */
     protected $productVersion;
-
 
     public function __construct(
         PriceRepository $price,
@@ -97,7 +98,8 @@ class PriceController extends AdminBaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request $request
+     * @param Request $request
+     *
      * @return Response
      */
     public function store(Request $request)
@@ -113,7 +115,8 @@ class PriceController extends AdminBaseController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Price $price
+     * @param Price $price
+     *
      * @return Response
      */
     public function edit(Price $price)
@@ -133,8 +136,9 @@ class PriceController extends AdminBaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param  Price $price
-     * @param  Request $request
+     * @param Price   $price
+     * @param Request $request
+     *
      * @return Response
      */
     public function update(Price $price, Request $request)
@@ -150,7 +154,8 @@ class PriceController extends AdminBaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Price $price
+     * @param Price $price
+     *
      * @return Response
      */
     public function destroy(Price $price)

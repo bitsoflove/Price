@@ -8,6 +8,14 @@ return [
     'format' => [
         'decimals' => 2,
         'decimal_point' => ',',
-        'thousands_sep' => " "
-    ]
+        'thousands_sep' => '.',
+    ],
+    'currency' => [
+        'default' => 'eur',
+        'signs' => [
+            "usd" => "$",
+            "eur" => "€",
+            "gbp" => "£",
+        ],
+    ],
 ];

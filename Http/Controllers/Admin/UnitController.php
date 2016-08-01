@@ -1,4 +1,6 @@
-<?php namespace Modules\Price\Http\Controllers\Admin;
+<?php
+
+namespace Modules\Price\Http\Controllers\Admin;
 
 use Laracasts\Flash\Flash;
 use Illuminate\Http\Request;
@@ -19,7 +21,6 @@ class UnitController extends AdminBaseController
      * @var PriceRepository
      */
     protected $price;
-
 
     public function __construct(
         UnitRepository $unit,
@@ -61,7 +62,8 @@ class UnitController extends AdminBaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request $request
+     * @param Request $request
+     *
      * @return Response
      */
     public function store(Request $request)
@@ -76,7 +78,8 @@ class UnitController extends AdminBaseController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Unit $unit
+     * @param Unit $unit
+     *
      * @return Response
      */
     public function edit(Unit $unit)
@@ -92,8 +95,9 @@ class UnitController extends AdminBaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param  Unit $unit
-     * @param  Request $request
+     * @param Unit    $unit
+     * @param Request $request
+     *
      * @return Response
      */
     public function update(Unit $unit, Request $request)
@@ -108,7 +112,8 @@ class UnitController extends AdminBaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Unit $unit
+     * @param Unit $unit
+     *
      * @return Response
      */
     public function destroy(Unit $unit)

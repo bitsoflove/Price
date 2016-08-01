@@ -1,7 +1,10 @@
-<?php namespace Modules\Price\Providers;
+<?php
 
-use Modules\Price\Providers\PriceMonkeyPatchProvider;
+namespace Modules\Price\Providers;
+
 use Illuminate\Support\ServiceProvider;
+use Modules\Price\Facades\Gateways\CurrencyGateway;
+use Modules\Price\Repositories\CurrencyRepository;
 
 class PriceServiceProvider extends ServiceProvider
 {
@@ -14,8 +17,6 @@ class PriceServiceProvider extends ServiceProvider
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
@@ -36,12 +37,11 @@ class PriceServiceProvider extends ServiceProvider
 
     private function registerBindings()
     {
-        $migrations = realpath(__DIR__ . '/../Database/Migrations');
+        $migrations = realpath(__DIR__.'/../Database/Migrations');
 
         $this->publishes([
-            $migrations => $this->app->databasePath() . '/migrations',
+            $migrations => $this->app->databasePath().'/migrations',
         ], 'migrations');
-
 
         $this->app->bind(
             'Modules\Price\Repositories\CurrencyRepository',
@@ -56,7 +56,6 @@ class PriceServiceProvider extends ServiceProvider
             }
         );
 
-
         $this->app->bind(
             'Modules\Price\Repositories\PriceTypeRepository',
             function () {
@@ -69,7 +68,6 @@ class PriceServiceProvider extends ServiceProvider
                 return new \Modules\Price\Repositories\Cache\CachePriceTypeDecorator($repository);
             }
         );
-
 
         $this->app->bind(
             'Modules\Price\Repositories\UnitRepository',
@@ -84,7 +82,6 @@ class PriceServiceProvider extends ServiceProvider
             }
         );
 
-
         $this->app->bind(
             'Modules\Price\Repositories\PriceRepository',
             function () {
@@ -97,7 +94,6 @@ class PriceServiceProvider extends ServiceProvider
                 return new \Modules\Price\Repositories\Cache\CachePriceDecorator($repository);
             }
         );
-
 
         $this->app->bind(
             'Modules\Price\Repositories\ProductVersionPriceRepository',
@@ -112,37 +108,12 @@ class PriceServiceProvider extends ServiceProvider
             }
         );
 
-
-        $this->app->bind(
-            'Modules\Price\Repositories\VatRepository',
-            function () {
-                $repository = new \Modules\Price\Repositories\Eloquent\EloquentVatRepository(new \Modules\Price\Entities\Vat());
-
-                if (!config('app.cache')) {
-                    return $repository;
-                }
-
-                return new \Modules\Price\Repositories\Cache\CacheVatDecorator($repository);
-            }
-        );
-
-
-
-        $this->app->bind(
-            'Modules\Price\Repositories\PriceTypeVatRepository',
-            function () {
-                $repository = new \Modules\Price\Repositories\Eloquent\EloquentPriceTypeVatRepository(new \Modules\Price\Entities\PriceTypeVat());
-
-                if (!config('app.cache')) {
-                    return $repository;
-                }
-
-                return new \Modules\Price\Repositories\Cache\CachePriceTypeVatDecorator($repository);
-            }
-        );
+        $this->app->bind('currency', function(){
+            return new CurrencyGateway(
+                app(CurrencyRepository::class)
+            );
+        });
 
 // add bindings
-
     }
-
 }

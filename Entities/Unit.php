@@ -1,7 +1,8 @@
-<?php namespace Modules\Price\Entities;
+<?php
+
+namespace Modules\Price\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use Modules\Price\Entities\Price;
 
 class Unit extends Model
 {
@@ -15,7 +16,6 @@ class Unit extends Model
      */
     protected $fillable = ['id', 'quantity', 'unit'];
 
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -24,31 +24,35 @@ class Unit extends Model
         return $this->hasMany(Price::class, 'unit_id', 'id');
     }
 
-
     /**
      * @param array $attributes
+     *
      * @return bool|int
      */
     public function update(array $attributes = [])
     {
         $res = parent::update($attributes);
         self::sync($this, $attributes);
+
         return $res;
     }
 
     /**
      * @param array $attributes
+     *
      * @return static
      */
     public static function create(array $attributes = [])
     {
         $res = parent::create($attributes);
         self::sync($res, $attributes);
+
         return $res;
     }
 
     /**
-     * Sync many-to-many relationships
+     * Sync many-to-many relationships.
+     *
      * @param Model $model
      * @param array $attributes
      */

@@ -10,7 +10,6 @@ return [
         'destroy',
     ],
 
-
     'price.pricetypes' => [
         'index',
         'create',
@@ -19,7 +18,6 @@ return [
         'update',
         'destroy',
     ],
-
 
     'price.units' => [
         'index',
@@ -30,7 +28,6 @@ return [
         'destroy',
     ],
 
-
     'price.prices' => [
         'index',
         'create',
@@ -39,7 +36,6 @@ return [
         'update',
         'destroy',
     ],
-
 
     'price.productversionprices' => [
         'index',
@@ -50,17 +46,6 @@ return [
         'destroy',
     ],
 
-
-    'price.vats' => [
-        'index',
-        'create',
-        'store',
-        'edit',
-        'update',
-        'destroy',
-    ],
-
-
     'price.countries' => [
         'index',
         'create',
@@ -69,18 +54,6 @@ return [
         'update',
         'destroy',
     ],
-
-
-    'price.pricetypevats' => [
-        'index',
-        'create',
-        'store',
-        'edit',
-        'update',
-        'destroy',
-    ],
-
-
 
 // append
 

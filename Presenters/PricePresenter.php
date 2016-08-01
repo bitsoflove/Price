@@ -6,10 +6,8 @@ use Laracasts\Presenter\Presenter;
 
 class PricePresenter extends Presenter
 {
-
-
     /**
-     * A printable price
+     * A printable price.
      *
      * @return string
      */
@@ -22,6 +20,4 @@ class PricePresenter extends Presenter
             config('asgard.price.config.format.thousands_sep', ',')
         );
     }
-
-
 }

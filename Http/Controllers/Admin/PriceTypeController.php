@@ -1,14 +1,14 @@
-<?php namespace Modules\Price\Http\Controllers\Admin;
+<?php
+
+namespace Modules\Price\Http\Controllers\Admin;
 
 use Laracasts\Flash\Flash;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Modules\Price\Entities\PriceType;
-use Modules\Price\Entities\PriceTypeVat;
 use Modules\Price\Repositories\PriceRepository;
 use Modules\Price\Repositories\PriceTypeRepository;
 use Modules\Core\Http\Controllers\Admin\AdminBaseController;
-use Modules\Price\Repositories\PriceTypeVatRepository;
 
 class PriceTypeController extends AdminBaseController
 {
@@ -23,13 +23,11 @@ class PriceTypeController extends AdminBaseController
 
     public function __construct(
         PriceTypeRepository $priceType,
-        PriceTypeVatRepository $priceTypeVat,
         PriceRepository $price
     ) {
         parent::__construct();
 
         $this->priceType = $priceType;
-        $this->priceTypeVat = $priceTypeVat;
         $this->price = $price;
     }
 
@@ -54,7 +52,6 @@ class PriceTypeController extends AdminBaseController
     {
         $variables = [
             'priceType' => $priceType,
-            'priceTypeVats' => $this->priceTypeVat->all(),
             'prices' => $this->price->all(),
         ];
 
@@ -64,7 +61,8 @@ class PriceTypeController extends AdminBaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request $request
+     * @param Request $request
+     *
      * @return Response
      */
     public function store(Request $request)
@@ -80,14 +78,14 @@ class PriceTypeController extends AdminBaseController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  PriceType $priceType
+     * @param PriceType $priceType
+     *
      * @return Response
      */
     public function edit(PriceType $priceType)
     {
         $variables = [
             'priceType' => $priceType,
-            'priceTypeVats' => $this->priceTypeVat->all(),
             'prices' => $this->price->all(),
         ];
 
@@ -97,8 +95,9 @@ class PriceTypeController extends AdminBaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param  PriceType $priceType
-     * @param  Request $request
+     * @param PriceType $priceType
+     * @param Request   $request
+     *
      * @return Response
      */
     public function update(PriceType $priceType, Request $request)
@@ -114,7 +113,8 @@ class PriceTypeController extends AdminBaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  PriceType $priceType
+     * @param PriceType $priceType
+     *
      * @return Response
      */
     public function destroy(PriceType $priceType)

@@ -1,16 +1,13 @@
-<?php namespace Modules\Price\Entities;
+<?php
+
+namespace Modules\Price\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Laracasts\Presenter\PresentableTrait;
-use Modules\Price\Entities\Currency;
-use Modules\Price\Entities\PriceType;
-use Modules\Price\Entities\ProductVersionPrice;
-use Modules\Price\Entities\Unit;
 use Modules\Price\Presenters\PricePresenter;
 
 class Price extends Model
 {
-
     use PresentableTrait;
 
     /**
@@ -26,10 +23,20 @@ class Price extends Model
         'price_type_id',
         'price',
         'currency_id',
-        'unit_id'
+        'unit_id',
     ];
 
+    /**
+     * @var string
+     */
     protected $presenter = PricePresenter::class;
+
+    /**
+     * @var array
+     */
+    protected $with = [
+        'priceType'
+    ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -61,7 +68,7 @@ class Price extends Model
     public function productVersions()
     {
         return $this->belongsToMany(config('asgard.product.config.entities.product-version.class',
-            "\\Modules\\Product\\Entities\\ProductVersion"),
+            '\\Modules\\Product\\Entities\\ProductVersion'),
             'product_version_prices',
             'price_id',
             'product_version_id'
@@ -77,47 +84,53 @@ class Price extends Model
     }
 
     /**
-     * Retrieve the cents value into an actual price value
+     * Retrieve the cents value into an actual price value.
      *
      * @return float
      */
-    public function getPriceAttribute(){
+    public function getPriceAttribute()
+    {
         return $this->attributes['price'] / 100;
     }
 
     /**
-     * Transform a given price into it's cents value
+     * Transform a given price into it's cents value.
      *
      * @param float $price
      */
-    public function setPriceAttribute($price){
+    public function setPriceAttribute($price)
+    {
         $this->attributes['price'] = $price * 100;
     }
 
     /**
      * @param array $attributes
+     *
      * @return bool|int
      */
     public function update(array $attributes = [])
     {
         $res = parent::update($attributes);
         self::sync($this, $attributes);
+
         return $res;
     }
 
     /**
      * @param array $attributes
+     *
      * @return static
      */
     public static function create(array $attributes = [])
     {
         $res = parent::create($attributes);
         self::sync($res, $attributes);
+
         return $res;
     }
 
     /**
-     * Sync many-to-many relationships
+     * Sync many-to-many relationships.
      *
      * @param Model $model
      * @param array $attributes

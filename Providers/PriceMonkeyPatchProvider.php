@@ -1,20 +1,18 @@
-<?php namespace Modules\Price\Providers;
+<?php
+
+namespace Modules\Price\Providers;
 
 use Modules\Countries\Entities\Country;
 use Modules\Price\Entities\Price;
 use Modules\Price\Entities\PriceTypeVat;
 use Modules\Price\Entities\ProductVersionDiscount;
 use Modules\Price\Entities\ProductVersionPrice;
-use Modules\Price\Entities\Vat;
 use Modules\Product\Providers\BaseMonkeyPatchProvider;
 
 class PriceMonkeyPatchProvider extends BaseMonkeyPatchProvider
 {
-
     /**
      * Register the application services.
-     *
-     * @return void
      */
     public function register()
     {
@@ -44,33 +42,36 @@ class PriceMonkeyPatchProvider extends BaseMonkeyPatchProvider
         });
 
         $this->productVersion->addExternalMethod('getPriceForType', function ($type) {
-            return $this->prices()->whereHas('priceType', function($q)use($type){
-                $q->where('slug', '=',$type);
-            })->first();
+            // due to performance issues we replace the whereHas relationship resolution
+            // with a collection function
+//            return $this->prices()->whereHas('priceType', function ($q) use ($type) {
+//                $q->where('slug', '=', $type);
+//            })->first();
+
+            $rtn = null;
+
+            $this->prices->each(function($price)use(&$rtn, $type){
+                if(!is_null($price->priceType) && $price->priceType->slug == $type){
+                    $rtn = $price;
+                    return false; // stop execution
+                }
+            });
+
+            return $rtn;
         });
 
-        /**
+        /*
          * If we only have one price we can use a default price
          */
         $this->productVersion->addExternalMethod('getDefaultPriceAttribute', function () {
             return $this->getPriceForType(config('asgard.price.config.price_types.default', 'normal'));
         });
 
-        /**
+        /*
          * Quickly get the first discount value
          */
         $this->productVersion->addExternalMethod('getDiscountAttribute', function () {
             return $this->productVersionDiscounts->first();
-        });
-
-        $country = app(Country::class);
-
-        $country->addExternalMethod('priceTypeVats', function () {
-            return $this->hasMany(
-                PriceTypeVat::class,
-                'country_id',
-                'id'
-            );
         });
 
     }

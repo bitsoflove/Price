@@ -29,7 +29,7 @@
                         <ul class="nav nav-tabs">
                             <?php $i = 0; ?>
                             <?php foreach (LaravelLocalization::getSupportedLocales() as $locale => $language): ?>
-                                <?php $i++; ?>
+                                <?php ++$i; ?>
                                 <li class="{{ App::getLocale() == $locale ? 'active' : '' }}">
                                     <a href="#tab_{{ $i }}" data-toggle="tab">{{ trans('core::core.tab.'. strtolower($language['name'])) }}</a>
                                 </li>
@@ -38,7 +38,7 @@
                         <div class="tab-content">
                             <?php $i = 0; ?>
                             <?php foreach (LaravelLocalization::getSupportedLocales() as $locale => $language): ?>
-                                <?php $i++; ?>
+                                <?php ++$i; ?>
                                 <div class="tab-pane {{ App::getLocale() == $locale ? 'active' : '' }}" id="tab_{{ $i }}">
                                      @include('price::admin.units.create-translation-fields', ['lang' => $locale])
                                 </div>

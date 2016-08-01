@@ -1,4 +1,6 @@
-<?php namespace Modules\Price\Sidebar;
+<?php
+
+namespace Modules\Price\Sidebar;
 
 use Maatwebsite\Sidebar\Group;
 use Maatwebsite\Sidebar\Item;
@@ -70,22 +72,6 @@ class SidebarExtender implements \Maatwebsite\Sidebar\SidebarExtender
 //                    $this->auth->hasAccess('price.productversionprices.index')
 //                );
 //            });
-            $group->item(trans('price::vats.title.vats'), function (Item $item) {
-                $item->weight(2);
-                $item->icon('fa fa-camera');
-                $item->route('admin.price.vat.index');
-                $item->authorize(
-                    $this->auth->hasAccess('price.vats.index')
-                );
-            });
-            $group->item(trans('price::pricetypevats.title.pricetypevats'), function (Item $item) {
-                $item->weight(2);
-                $item->icon('fa fa-camera');
-                $item->route('admin.price.pricetypevat.index');
-                $item->authorize(
-                    $this->auth->hasAccess('price.pricetypevats.index')
-                );
-            });
 
         });
 
