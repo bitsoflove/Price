@@ -1,6 +1,7 @@
 <?php namespace Modules\Price\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Laracasts\Presenter\PresentableTrait;
 use Modules\Price\Entities\Currency;
 use Modules\Price\Entities\PriceType;
@@ -12,6 +13,7 @@ class Price extends Model
 {
 
     use PresentableTrait;
+    use SoftDeletes;
 
     /**
      * @var string
