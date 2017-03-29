@@ -13,4 +13,4 @@ interface CurrencyRepository extends BaseRepository
      */
     public function findByIso($iso);
 
-    }
+}
