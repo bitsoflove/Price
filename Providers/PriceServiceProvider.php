@@ -1,5 +1,6 @@
 <?php namespace Modules\Price\Providers;
 
+use Modules\Price\Facades\Gateways\CurrencyGateway;
 use Modules\Price\Providers\PriceMonkeyPatchProvider;
 use Illuminate\Support\ServiceProvider;
 
@@ -140,6 +141,10 @@ class PriceServiceProvider extends ServiceProvider
                 return new \Modules\Price\Repositories\Cache\CachePriceTypeVatDecorator($repository);
             }
         );
+
+        $this->app->bind('currency', function(){
+            return $this->app->make(CurrencyGateway::class);
+        });
 
 // add bindings
 
