@@ -82,7 +82,7 @@ class PriceValueObject
         // set the basic format
         $format = [
             number_format(
-                $round === true ? price_custom_floor($this->amount) : $this->amount,
+                $round === true ? round($this->amount) : $this->amount,
                 $decimals,
                 config('asgard.price.config.format.decimal_point', '.'),
                 config('asgard.price.config.format.thousands_sep', ',')
